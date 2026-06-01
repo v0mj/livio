@@ -20,6 +20,7 @@ check "livio-release package installed" pacman -Q livio-release
 check "NetworkManager enabled" systemctl is-enabled --quiet NetworkManager.service
 check "bootloader tools installed" command -v grub-install
 check "Flatpak installed" command -v flatpak
+check "livioctl installed" command -v livioctl
 
 if (( failures > 0 )); then
     exit 1

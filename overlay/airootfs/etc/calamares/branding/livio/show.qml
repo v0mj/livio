@@ -9,10 +9,10 @@ Rectangle {
     property int slide: 0
 
     Timer {
-        interval: 3500
+        interval: 3800
         repeat: true
         running: true
-        onTriggered: root.slide = (root.slide + 1) % 3
+        onTriggered: root.slide = (root.slide + 1) % 4
     }
 
     gradient: Gradient {
@@ -39,10 +39,12 @@ Rectangle {
             color: "#c7d0da"
             font.pixelSize: 18
             text: root.slide === 0
-                ? "A clean Arch-based gaming system with a KDE live environment and a current graphics stack."
+                ? "A clean Arch-based gaming system with a KDE live environment, Livio identity files, and a custom Fastfetch mark."
                 : root.slide === 1
-                    ? "Install the desktop you want, keep gaming tools by default, and avoid a bloated offline image."
-                    : "Livio OS ships a stable kernel path first and keeps recovery options close instead of chasing fake tweaks."
+                    ? "Choose your desktop, kernel path, and GPU stack during install instead of accepting one locked setup."
+                    : root.slide === 2
+                        ? "The Livio gaming kernel is built from Arch's maintained Zen kernel recipe, while LTS stays close as a recovery path."
+                        : "Preview rule: test in a VM first, keep internet connected during install, and back up real hardware before installing."
         }
     }
 
@@ -53,7 +55,10 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 64
         anchors.verticalCenter: parent.verticalCenter
-        color: "#9ED36A"
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#9ED36A" }
+            GradientStop { position: 1.0; color: "#7DD3FC" }
+        }
 
         Text {
             anchors.centerIn: parent

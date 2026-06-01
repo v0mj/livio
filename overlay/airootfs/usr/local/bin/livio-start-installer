@@ -3,6 +3,7 @@ set -euo pipefail
 
 if command -v livio-detect-gpu >/dev/null 2>&1; then
     livio-detect-gpu --notify || true
+    livio-detect-gpu --summary > /tmp/livio-gpu-recommendation 2>/dev/null || true
 fi
 
 if command -v pkexec >/dev/null 2>&1; then

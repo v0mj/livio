@@ -27,6 +27,9 @@ fi
 passwd -d livio
 cp -a /etc/skel/. /home/livio/
 mkdir -p /home/livio/Desktop
+chmod 755 /usr/local/bin/livio-bootstrap-target
+chmod 755 /usr/local/bin/livio-check-system
+chmod 755 /usr/local/bin/livio-detect-gpu
 chmod 755 /usr/local/bin/livio-start-installer
 chmod 755 /usr/local/bin/livio-install-heroic
 chmod 755 /home/livio/Desktop/Install\ Livio\ OS.desktop

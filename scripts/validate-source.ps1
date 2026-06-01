@@ -25,10 +25,21 @@ function Read-Text {
 
 $requiredFiles = @(
   "README.md",
+  "BUILDING.md",
+  "docs\AI_MAINTENANCE.md",
+  "docs\KNOWN_ISSUES.md",
+  "docs\PACKAGE_SIGNING.md",
+  "docs\RELEASE_CHECKLIST.md",
+  ".github\workflows\validate.yml",
+  ".github\ISSUE_TEMPLATE\bug_report.md",
+  ".github\ISSUE_TEMPLATE\feature_request.md",
+  ".github\pull_request_template.md",
   "config\live-packages.x86_64",
   "scripts\build-iso.sh",
   "scripts\build-iso-docker.ps1",
   "packaging\calamares\PKGBUILD",
+  "packaging\livioctl\PKGBUILD",
+  "packaging\livioctl\livioctl.cpp",
   "packaging\linux-livio\prepare-source.sh",
   "packaging\livio-release\PKGBUILD",
   "packaging\livio-release\issue",
@@ -48,8 +59,13 @@ $requiredFiles = @(
   "overlay\airootfs\etc\calamares\modules\packagechooser_kernel.conf",
   "overlay\airootfs\etc\calamares\modules\packagechooser_desktop.conf",
   "overlay\airootfs\etc\calamares\modules\packagechooser_gpu.conf",
+  "overlay\airootfs\etc\sddm.conf.d\livio.conf",
+  "overlay\airootfs\etc\skel\.config\kdeglobals",
+  "overlay\airootfs\etc\skel\.config\plasma-org.kde.plasma.desktop-appletsrc",
   "overlay\airootfs\etc\skel\.config\fastfetch\livio-logo.txt",
-  "overlay\airootfs\etc\skel\.config\fastfetch\config.jsonc"
+  "overlay\airootfs\etc\skel\.config\fastfetch\config.jsonc",
+  "overlay\airootfs\usr\share\color-schemes\LivioDark.colors",
+  "overlay\airootfs\usr\share\livio\wallpapers\livio-nebula.svg"
 )
 
 foreach ($relativePath in $requiredFiles) {
@@ -67,7 +83,9 @@ if ($errors.Count -eq 0) {
   Assert-True ($buildScript -match "brand_boot_menus") "Build script must patch inherited Arch boot menu labels."
   Assert-True (($buildScript -match "syslinux") -and ($buildScript -match "grub") -and ($buildScript -match "efiboot/loader")) "Boot menu branding must cover BIOS, GRUB and UEFI profile files."
   Assert-True ($buildScript -match "livio-release") "Build script must build and copy livio-release."
+  Assert-True ($buildScript -match "livioctl") "Build script must build and copy livioctl."
   Assert-True ($buildScript -match "BUILD_LIVIO_KERNEL") "Build script must support the linux-livio package build."
+  Assert-True ($buildScript -match "LIVIO_REPO_SIGN_KEY") "Build script must expose optional repo signing."
   Assert-True ($buildScript -match "repo-add") "Build script must create a local Livio package repository."
   Assert-True ($buildScript -match 'iso_name="livioos"') "Build script must set the ISO name to livioos."
   Assert-True ($buildScript -match 'install_dir="livio"') "Build script must set the archiso install_dir to livio."
@@ -75,16 +93,21 @@ if ($errors.Count -eq 0) {
   $customizeScript = Read-Text "overlay\airootfs\root\customize_airootfs.sh"
   Assert-True ($customizeScript -match "livio-release") "Live customizer must install livio-release from local packages."
   Assert-True ($customizeScript -notmatch "cat\s+>\s+/usr/lib/os-release") "Live identity should come from livio-release, not heredoc writes."
+  Assert-True ($customizeScript -match "livio-check-system") "Live customizer must make Livio helper scripts executable."
+  Assert-True ($customizeScript -match "livio-detect-gpu") "Live customizer must make the GPU helper executable."
 
   $bootstrapScript = Read-Text "overlay\airootfs\usr\local\bin\livio-bootstrap-target"
   Assert-True ($bootstrapScript -match "retry 3 15 pacstrap") "Target bootstrap must retry pacstrap."
   Assert-True ($bootstrapScript -match "arch-chroot.*livio-release") "Target bootstrap must install livio-release in the target."
   Assert-True ($bootstrapScript -match "\[livio-local\]") "Target bootstrap must configure the local Livio package repository."
   Assert-True ($bootstrapScript -match "linux-lts") "Target bootstrap must keep the LTS fallback kernel."
+  Assert-True ($bootstrapScript -match "livio-detect-gpu") "Target bootstrap must install the GPU helper in the target."
 
   $gpuScript = Read-Text "overlay\airootfs\usr\local\bin\livio-detect-gpu"
   Assert-True ($gpuScript -match "gpu-nvidia") "GPU detection must know the NVIDIA choice."
   Assert-True ($gpuScript -match "gpu-hybrid") "GPU detection must know the hybrid choice."
+  Assert-True ($gpuScript -match "gpu-open") "GPU detection must know the open graphics choice."
+  Assert-True ($gpuScript -match "--summary") "GPU detection must expose a summary mode."
 
   $packageList = Get-Content -LiteralPath (Join-Path $root "config\live-packages.x86_64") |
     ForEach-Object { $_.Trim() } |
@@ -102,6 +125,7 @@ if ($errors.Count -eq 0) {
     Assert-True ($netinstall -match [regex]::Escape("name: `"$chooserId`"")) "Package chooser id has no matching netinstall group: $chooserId"
   }
   Assert-True ($netinstall -match "linux-livio") "Netinstall must expose the linux-livio package group."
+  Assert-True ($netinstall -match "livioctl") "Netinstall must include livioctl."
 
   try {
     $fastfetchConfig = Read-Text "overlay\airootfs\etc\skel\.config\fastfetch\config.jsonc" | ConvertFrom-Json
@@ -112,6 +136,13 @@ if ($errors.Count -eq 0) {
   }
   $fastfetchLogo = Read-Text "overlay\airootfs\etc\skel\.config\fastfetch\livio-logo.txt"
   Assert-True ($fastfetchLogo -match "@@%%%%%%@@") "Fastfetch Livio logo content is missing."
+
+  $plasmaDesktop = Read-Text "overlay\airootfs\etc\skel\.config\plasma-org.kde.plasma.desktop-appletsrc"
+  Assert-True ($plasmaDesktop -match "livio-nebula.svg") "Plasma defaults must use the Livio wallpaper."
+
+  $livioctlSource = Read-Text "packaging\livioctl\livioctl.cpp"
+  Assert-True ($livioctlSource -match "livioctl") "livioctl source must define the helper."
+  Assert-True ($livioctlSource -match "doctor") "livioctl source must include doctor mode."
 
   Get-ChildItem -LiteralPath (Join-Path $root "overlay") -Recurse -Filter *.svg | ForEach-Object {
     try {

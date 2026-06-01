@@ -19,6 +19,7 @@
     - gst-plugins-ugly
     - lib32-mesa
     - libdvdcss
+    - livioctl
     - mesa
     - noto-fonts
     - noto-fonts-emoji

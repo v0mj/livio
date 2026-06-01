@@ -100,6 +100,7 @@ The build creates:
 - the live KDE environment
 - the Calamares installer package
 - the `livio-release` identity package
+- the `livioctl` helper package
 - the optional `linux-livio` kernel package
 - a local `livio-local` package repository inside the ISO
 - the final bootable Livio OS ISO
@@ -117,14 +118,23 @@ Basic checks:
 1. Boot the ISO in a VM.
 2. Confirm the boot menu says `Livio OS`.
 3. Confirm the KDE live desktop starts.
-4. Start `Install Livio OS` from the desktop.
-5. Confirm the installer shows desktop, kernel, and GPU choices.
-6. Install into a blank virtual disk.
-7. Boot the installed system.
-8. Run:
+4. Open Konsole and confirm Fastfetch shows the Livio logo.
+5. Run `livioctl status`.
+6. Run `livioctl doctor`.
+7. Start `Install Livio OS` from the desktop.
+8. Confirm the installer shows desktop, kernel, and GPU choices.
+9. Install into a blank virtual disk.
+10. Boot the installed system.
+11. Run:
 
 ```bash
 livio-check-system
+```
+
+12. Run:
+
+```bash
+livioctl doctor
 ```
 
 The installer currently expects internet access during installation because it

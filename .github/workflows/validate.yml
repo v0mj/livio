@@ -1,0 +1,14 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  source:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Livio source
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File .\scripts\validate-source.ps1

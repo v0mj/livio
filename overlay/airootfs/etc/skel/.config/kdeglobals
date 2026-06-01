@@ -1,0 +1,16 @@
+[General]
+ColorScheme=LivioDark
+Name=LivioDark
+TerminalApplication=konsole
+
+[Icons]
+Theme=breeze-dark
+
+[KDE]
+LookAndFeelPackage=org.kde.breezedark.desktop
+
+[WM]
+activeBackground=12,16,20
+activeForeground=245,247,250
+inactiveBackground=17,20,24
+inactiveForeground=122,131,144

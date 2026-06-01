@@ -1,0 +1,19 @@
+pkgname=livioctl
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Livio OS command line helper"
+arch=("x86_64")
+url="https://github.com/v0mj/livio"
+license=("GPL-3.0-or-later")
+depends=("gcc-libs" "glibc")
+options=("!debug")
+source=("livioctl.cpp")
+sha256sums=("SKIP")
+
+build() {
+  g++ -std=c++17 -O2 -Wall -Wextra -pedantic "$srcdir/livioctl.cpp" -o livioctl
+}
+
+package() {
+  install -Dm755 livioctl "$pkgdir/usr/bin/livioctl"
+}

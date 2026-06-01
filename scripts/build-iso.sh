@@ -10,10 +10,13 @@ CALAMARES_SRC_DIR="${CALAMARES_SRC_DIR:-$ROOT_DIR/packaging/calamares}"
 CALAMARES_BUILD_DIR="${CALAMARES_BUILD_DIR:-$ROOT_DIR/build/calamares}"
 RELEASE_SRC_DIR="${RELEASE_SRC_DIR:-$ROOT_DIR/packaging/livio-release}"
 RELEASE_BUILD_DIR="${RELEASE_BUILD_DIR:-$ROOT_DIR/build/livio-release}"
+LIVIOCTL_SRC_DIR="${LIVIOCTL_SRC_DIR:-$ROOT_DIR/packaging/livioctl}"
+LIVIOCTL_BUILD_DIR="${LIVIOCTL_BUILD_DIR:-$ROOT_DIR/build/livioctl}"
 BUILD_LIVIO_KERNEL="${BUILD_LIVIO_KERNEL:-1}"
 KERNEL_SRC_DIR="${KERNEL_SRC_DIR:-$ROOT_DIR/packaging/linux-livio}"
 KERNEL_SOURCE_DIR="${KERNEL_SOURCE_DIR:-$ROOT_DIR/build/linux-livio-source}"
 KERNEL_BUILD_DIR="${KERNEL_BUILD_DIR:-$ROOT_DIR/build/linux-livio}"
+LIVIO_REPO_SIGN_KEY="${LIVIO_REPO_SIGN_KEY:-}"
 
 require_cmd() {
     if ! command -v "$1" >/dev/null 2>&1; then
@@ -43,6 +46,11 @@ fi
 
 if [[ ! -d "$RELEASE_SRC_DIR" ]]; then
     echo "Missing Livio release packaging directory: $RELEASE_SRC_DIR" >&2
+    exit 1
+fi
+
+if [[ ! -d "$LIVIOCTL_SRC_DIR" ]]; then
+    echo "Missing livioctl packaging directory: $LIVIOCTL_SRC_DIR" >&2
     exit 1
 fi
 
@@ -122,15 +130,21 @@ build_local_package_repo() {
     (
         cd "$repo_dir"
         rm -f livio-local.db livio-local.db.tar.zst livio-local.files livio-local.files.tar.zst
-        repo-add -n -R livio-local.db.tar.zst ./*.pkg.tar.zst
+        if [[ -n "$LIVIO_REPO_SIGN_KEY" ]]; then
+            repo-add --sign --key "$LIVIO_REPO_SIGN_KEY" -n -R livio-local.db.tar.zst ./*.pkg.tar.zst
+        else
+            repo-add -n -R livio-local.db.tar.zst ./*.pkg.tar.zst
+        fi
     )
 }
 
 calamares_pkg_paths=()
 release_pkg_paths=()
+livioctl_pkg_paths=()
 kernel_pkg_paths=()
 build_arch_package calamares_pkg_paths "$CALAMARES_SRC_DIR" "$CALAMARES_BUILD_DIR" 'calamares-[0-9]*-x86_64.pkg.tar.zst' "Calamares"
 build_arch_package release_pkg_paths "$RELEASE_SRC_DIR" "$RELEASE_BUILD_DIR" 'livio-release-*.pkg.tar.zst' "Livio release"
+build_arch_package livioctl_pkg_paths "$LIVIOCTL_SRC_DIR" "$LIVIOCTL_BUILD_DIR" 'livioctl-[0-9]*-x86_64.pkg.tar.zst' "livioctl"
 
 if [[ "$BUILD_LIVIO_KERNEL" == "1" ]]; then
     bash "$KERNEL_SRC_DIR/prepare-source.sh" "$KERNEL_SOURCE_DIR"
@@ -158,10 +172,10 @@ sed -i 's/^install_dir=.*/install_dir="livio"/' "$PROFILE_DIR/profiledef.sh"
 
 mkdir -p "$PROFILE_DIR/airootfs/root/livio-pkgs"
 mkdir -p "$PROFILE_DIR/airootfs/usr/share/livio/packages"
-for package_path in "${calamares_pkg_paths[@]}" "${release_pkg_paths[@]}"; do
+for package_path in "${calamares_pkg_paths[@]}" "${release_pkg_paths[@]}" "${livioctl_pkg_paths[@]}"; do
     cp "$package_path" "$PROFILE_DIR/airootfs/root/livio-pkgs/"
 done
-for package_path in "${release_pkg_paths[@]}" "${kernel_pkg_paths[@]}"; do
+for package_path in "${release_pkg_paths[@]}" "${livioctl_pkg_paths[@]}" "${kernel_pkg_paths[@]}"; do
     cp "$package_path" "$PROFILE_DIR/airootfs/usr/share/livio/packages/"
 done
 build_local_package_repo "$PROFILE_DIR/airootfs/usr/share/livio/packages"
@@ -184,6 +198,7 @@ echo "  Work dir     : $WORK_DIR"
 echo "  Output dir   : $OUT_DIR"
 echo "  Calamares    : $CALAMARES_BUILD_DIR"
 echo "  Livio release: $RELEASE_BUILD_DIR"
+echo "  livioctl     : $LIVIOCTL_BUILD_DIR"
 echo "  Livio kernel : $BUILD_LIVIO_KERNEL"
 
 mkarchiso -v -w "$WORK_DIR" -o "$OUT_DIR" "$PROFILE_DIR"

@@ -1,6 +1,8 @@
 # Livio OS
 
-`Livio OS` is an `Arch Linux`-based gaming distro scaffold built around:
+[![Validate](https://github.com/v0mj/livio/actions/workflows/validate.yml/badge.svg)](https://github.com/v0mj/livio/actions/workflows/validate.yml)
+
+`Livio OS` is an AI-maintained `Arch Linux`-based gaming distro preview built around:
 
 - a `KDE Plasma` live ISO
 - a desktop installer icon on the live desktop
@@ -9,16 +11,30 @@
 - selectable target kernel during install
 - selectable GPU driver strategy during install
 - a gaming-first package set for the installed system
+- a custom Livio Fastfetch logo, wallpaper and dark Plasma defaults
+- a small native `livioctl` helper for status and health checks
+
+The repository contains the source and build system. Generated ISO files and
+temporary build outputs are intentionally kept out of Git.
 
 ## Repository tree
 
 ```text
 livio/
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   ├── pull_request_template.md
+│   └── workflows/
 ├── BUILDING.md
 ├── LICENSE
 ├── README.md
 ├── config/
 │   └── live-packages.x86_64
+├── docs/
+│   ├── AI_MAINTENANCE.md
+│   ├── KNOWN_ISSUES.md
+│   ├── PACKAGE_SIGNING.md
+│   └── RELEASE_CHECKLIST.md
 ├── overlay/
 │   ├── pacman.conf
 │   └── airootfs/
@@ -37,9 +53,12 @@ livio/
 │       │   └── xdg/
 │       ├── root/
 │       │   └── customize_airootfs.sh
-│       └── usr/local/bin/
+│       └── usr/
+│           ├── local/bin/
+│           └── share/
 ├── packaging/
 │   ├── calamares/
+│   ├── livioctl/
 │   ├── linux-livio/
 │   └── livio-release/
 └── scripts/
@@ -63,17 +82,19 @@ What is already scaffolded here:
 - desktop chooser
 - GPU chooser
 - gaming package groups
-- branding placeholders for `Livio OS`
+- Livio branding assets for the installer, Fastfetch and Plasma defaults
 - a small `livio-release` package for system identity files
+- a native `livioctl` helper package
 - a generated `linux-livio` package recipe based on Arch's maintained Zen kernel
 - a GPU hint helper for the live installer
 - a simple `livio-check-system` command for post-install sanity checks
+- GitHub Actions source validation
+- release, signing and known-issues documentation
 
 What is intentionally not solved yet:
 
-- a polished theme pack
 - offline multi-desktop installs
-- signed Livio package/repository metadata
+- enforced signed Livio package/repository metadata
 
 ## Why the installer is online
 

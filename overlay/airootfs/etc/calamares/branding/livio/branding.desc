@@ -18,10 +18,10 @@ strings:
   versionedName: "Livio OS Preview"
   shortVersionedName: "Livio Preview"
   bootloaderEntryName: "Livio OS"
-  productUrl: ""
-  supportUrl: ""
-  knownIssuesUrl: ""
-  releaseNotesUrl: ""
+  productUrl: "https://github.com/v0mj/livio"
+  supportUrl: "https://github.com/v0mj/livio/issues"
+  knownIssuesUrl: "https://github.com/v0mj/livio/blob/main/docs/KNOWN_ISSUES.md"
+  releaseNotesUrl: "https://github.com/v0mj/livio/releases"
   donateUrl: ""
 
 images:

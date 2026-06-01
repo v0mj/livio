@@ -115,5 +115,6 @@ install -Dm644 /etc/pacman.conf "$target_root/etc/pacman.conf"
 configure_livio_local_repo
 install -Dm755 /usr/local/bin/livio-check-system "$target_root/usr/local/bin/livio-check-system"
 install -Dm755 /usr/local/bin/livio-install-heroic "$target_root/usr/local/bin/livio-install-heroic"
+install -Dm755 /usr/local/bin/livio-detect-gpu "$target_root/usr/local/bin/livio-detect-gpu"
 
 install_livio_release
