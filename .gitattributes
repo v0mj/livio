@@ -1,4 +1,5 @@
 * text=auto
+.gitattributes text eol=lf
 *.sh text eol=lf
 PKGBUILD text eol=lf
 *.install text eol=lf
@@ -8,4 +9,5 @@ PKGBUILD text eol=lf
 *.desktop text eol=lf
 *.svg text eol=lf
 *.jsonc text eol=lf
+*.md text eol=lf
 *.ps1 text eol=lf

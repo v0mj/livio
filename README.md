@@ -45,6 +45,8 @@ That avoids shipping a huge ISO containing every desktop and every gaming packag
 
 ## Build requirements
 
+For a full step-by-step guide, read `BUILDING.md`.
+
 You must build the ISO on an `Arch Linux` environment.
 
 Typical options:
