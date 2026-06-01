@@ -1,0 +1,14 @@
+write_livio_identity() {
+  install -Dm644 /usr/share/livio-release/os-release /usr/lib/os-release
+  install -Dm644 /usr/share/livio-release/lsb-release /etc/lsb-release
+  install -Dm644 /usr/share/livio-release/issue /etc/issue
+  install -Dm644 /usr/share/livio-release/issue.net /etc/issue.net
+}
+
+post_install() {
+  write_livio_identity
+}
+
+post_upgrade() {
+  write_livio_identity
+}

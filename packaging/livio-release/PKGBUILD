@@ -1,0 +1,34 @@
+pkgname=livio-release
+pkgver=2026.05.01
+pkgrel=1
+pkgdesc="Livio OS identity and release files"
+arch=('any')
+url=""
+license=('custom')
+depends=('filesystem')
+install=livio-release.install
+source=(
+  os-release
+  lsb-release
+  issue
+  issue.net
+  livio-logo.svg
+  livio-release.install
+)
+sha256sums=(
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+)
+
+package() {
+  install -Dm644 "$srcdir/os-release" "$pkgdir/usr/share/livio-release/os-release"
+  install -Dm644 "$srcdir/lsb-release" "$pkgdir/usr/share/livio-release/lsb-release"
+  install -Dm644 "$srcdir/issue" "$pkgdir/usr/share/livio-release/issue"
+  install -Dm644 "$srcdir/issue.net" "$pkgdir/usr/share/livio-release/issue.net"
+  install -Dm644 "$srcdir/livio-logo.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/livio.svg"
+  install -Dm644 "$srcdir/livio-logo.svg" "$pkgdir/usr/share/pixmaps/livio-logo.svg"
+}

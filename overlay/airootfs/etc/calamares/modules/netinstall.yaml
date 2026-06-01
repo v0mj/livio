@@ -1,0 +1,190 @@
+- name: "Livio core (hidden)"
+  description: "Livio OS base packages"
+  hidden: true
+  selected: true
+  critical: true
+  packages:
+    - accountsservice
+    - alsa-utils
+    - bluez
+    - bluez-utils
+    - ffmpegthumbnailer
+    - fastfetch
+    - flatpak
+    - fwupd
+    - glibc
+    - gst-libav
+    - gst-plugin-pipewire
+    - gst-plugins-bad
+    - gst-plugins-ugly
+    - lib32-mesa
+    - libdvdcss
+    - mesa
+    - noto-fonts
+    - noto-fonts-emoji
+    - pavucontrol
+    - pipewire
+    - pipewire-alsa
+    - pipewire-pulse
+    - plocate
+    - power-profiles-daemon
+    - sof-firmware
+    - steam-devices
+    - xdg-user-dirs
+    - xdg-utils
+    - wireplumber
+
+- name: "livio-kde"
+  description: "KDE Plasma desktop"
+  hidden: false
+  selected: true
+  critical: true
+  packages:
+    - ark
+    - dolphin
+    - gwenview
+    - kate
+    - kde-gtk-config
+    - kdialog
+    - konsole
+    - partitionmanager
+    - plasma-meta
+    - plasma-nm
+    - plasma-pa
+    - plasma-systemmonitor
+    - sddm
+    - xdg-desktop-portal-kde
+
+- name: "livio-gnome"
+  description: "GNOME desktop"
+  hidden: false
+  selected: false
+  critical: true
+  packages:
+    - gdm
+    - gnome
+    - gnome-tweaks
+
+- name: "livio-xfce"
+  description: "Xfce desktop"
+  hidden: false
+  selected: false
+  critical: true
+  packages:
+    - lightdm
+    - lightdm-gtk-greeter
+    - xfce4
+    - xfce4-goodies
+
+- name: "kernel-livio"
+  description: "Livio gaming kernel with LTS fallback"
+  hidden: false
+  selected: true
+  critical: true
+  packages:
+    - linux-livio
+    - linux-livio-headers
+
+- name: "kernel-arch-stable"
+  description: "Standard Arch kernel with LTS fallback"
+  hidden: false
+  selected: false
+  critical: true
+  packages:
+    - linux
+    - linux-headers
+
+- name: "kernel-lts-only"
+  description: "Use only the preinstalled LTS fallback kernel"
+  hidden: false
+  selected: false
+  critical: true
+  packages:
+    - linux-lts
+    - linux-lts-headers
+
+- name: "gpu-open"
+  description: "AMD and Intel open-source graphics stack"
+  hidden: false
+  selected: true
+  critical: true
+  packages:
+    - lib32-vulkan-intel
+    - lib32-vulkan-radeon
+    - libva-mesa-driver
+    - vulkan-intel
+    - vulkan-radeon
+
+- name: "gpu-nvidia"
+  description: "NVIDIA proprietary graphics stack"
+  hidden: false
+  selected: false
+  critical: true
+  packages:
+    - dkms
+    - lib32-nvidia-utils
+    - nvidia-dkms
+    - nvidia-settings
+    - nvidia-utils
+
+- name: "gpu-hybrid"
+  description: "Mesa plus NVIDIA proprietary drivers"
+  hidden: false
+  selected: false
+  critical: true
+  packages:
+    - dkms
+    - lib32-nvidia-utils
+    - lib32-vulkan-intel
+    - lib32-vulkan-radeon
+    - libva-mesa-driver
+    - nvidia-dkms
+    - nvidia-settings
+    - nvidia-utils
+    - vulkan-intel
+    - vulkan-radeon
+
+- name: "Gaming core"
+  description: "Recommended gaming tools and runtimes"
+  hidden: false
+  selected: true
+  critical: true
+  packages:
+    - flatpak
+    - gamescope
+    - gamemode
+    - lib32-gamemode
+    - lib32-mangohud
+    - lutris
+    - mangohud
+    - protontricks
+    - steam
+    - wine-staging
+    - winetricks
+
+- name: "Voice and social"
+  description: "Common voice and chat packages for multiplayer systems"
+  hidden: false
+  selected: true
+  critical: false
+  packages:
+    - discord
+    - mumble
+
+- name: "Streaming and capture"
+  description: "Recording and livestream tools"
+  hidden: false
+  selected: false
+  critical: false
+  packages:
+    - obs-studio
+
+- name: "Printing support"
+  description: "Printer discovery and driver basics"
+  hidden: false
+  selected: false
+  critical: false
+  packages:
+    - cups
+    - cups-filters
+    - system-config-printer

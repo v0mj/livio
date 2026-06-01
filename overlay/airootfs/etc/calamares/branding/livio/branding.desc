@@ -1,0 +1,44 @@
+---
+componentName: livio
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+
+windowExpanding: normal
+windowSize: 920px,560px
+windowPlacement: center
+
+sidebar: widget
+navigation: widget
+
+strings:
+  productName: "Livio OS"
+  shortProductName: "Livio"
+  version: "Preview"
+  shortVersion: "Preview"
+  versionedName: "Livio OS Preview"
+  shortVersionedName: "Livio Preview"
+  bootloaderEntryName: "Livio OS"
+  productUrl: ""
+  supportUrl: ""
+  knownIssuesUrl: ""
+  releaseNotesUrl: ""
+  donateUrl: ""
+
+images:
+  productIcon: "logo.svg"
+  productLogo: "logo.svg"
+  productWelcome: "welcome.svg"
+
+style:
+  SidebarBackground: "#111418"
+  SidebarText: "#F5F7FA"
+  SidebarTextCurrent: "#111418"
+  SidebarBackgroundCurrent: "#9ED36A"
+
+slideshow: "show.qml"
+slideshowAPI: 2
+
+uploadServer:
+  type: "none"
+  url: ""
+  sizeLimit: -1

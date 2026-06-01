@@ -1,0 +1,15 @@
+build/
+outputs/
+*.iso
+*.img
+*.qcow2
+*.vdi
+*.vmdk
+*.pkg.tar
+*.pkg.tar.*
+*.log
+*.tmp
+*.bak
+*.swp
+Thumbs.db
+.DS_Store

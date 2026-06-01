@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Install Livio OS
+Comment=Launch the Livio OS installer
+Exec=/usr/local/bin/livio-start-installer
+Icon=drive-removable-media
+Terminal=false
+StartupNotify=true
+Categories=System;Settings;

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <rect width="640" height="360" rx="24" fill="#101318"/>
+  <rect x="24" y="24" width="592" height="312" rx="20" fill="#1d242d"/>
+  <rect x="48" y="48" width="544" height="24" rx="12" fill="#9ED36A"/>
+  <rect x="48" y="98" width="120" height="196" rx="18" fill="#27303b"/>
+  <rect x="190" y="98" width="378" height="90" rx="18" fill="#27303b"/>
+  <rect x="190" y="204" width="378" height="90" rx="18" fill="#27303b"/>
+  <text x="48" y="320" fill="#F5F7FA" font-size="28" font-family="DejaVu Sans, sans-serif" font-weight="700">Xfce</text>
+</svg>

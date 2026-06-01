@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v livio-detect-gpu >/dev/null 2>&1; then
+    livio-detect-gpu --notify || true
+fi
+
+if command -v pkexec >/dev/null 2>&1; then
+    exec pkexec env \
+        DISPLAY="${DISPLAY:-}" \
+        XAUTHORITY="${XAUTHORITY:-}" \
+        WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-}" \
+        XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-}" \
+        XDG_SESSION_TYPE="${XDG_SESSION_TYPE:-}" \
+        calamares
+fi
+
+exec sudo -E calamares

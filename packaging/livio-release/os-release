@@ -1,0 +1,11 @@
+NAME="Livio OS"
+PRETTY_NAME="Livio OS Preview"
+ID=livio
+ID_LIKE=arch
+BUILD_ID=preview
+VERSION="Preview"
+VERSION_ID=preview
+VARIANT="Gaming Preview"
+VARIANT_ID=gaming
+ANSI_COLOR="38;2;158;211;106"
+LOGO=livio

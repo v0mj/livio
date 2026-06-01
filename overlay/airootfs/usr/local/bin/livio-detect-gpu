@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+gpu_text="$(lspci 2>/dev/null | grep -Ei 'vga|3d|display' || true)"
+virt_name="$(systemd-detect-virt --vm 2>/dev/null || true)"
+
+recommendation="gpu-open"
+message="Open-source Mesa graphics are recommended for this system."
+
+if [[ -n "$virt_name" ]]; then
+    recommendation="gpu-open"
+    message="Virtual machine detected (${virt_name}); use the AMD / Intel (Mesa) option unless you are passing through a physical GPU."
+elif grep -Eiq 'nvidia' <<<"$gpu_text"; then
+    if grep -Eiq 'intel|amd|advanced micro devices|ati' <<<"$gpu_text"; then
+        recommendation="gpu-hybrid"
+        message="NVIDIA plus another GPU detected; the Hybrid / Multi-vendor option is the safest installer choice."
+    else
+        recommendation="gpu-nvidia"
+        message="NVIDIA graphics detected; choose NVIDIA Proprietary if this is the GPU you will use."
+    fi
+fi
+
+case "${1:-}" in
+    --id)
+        printf '%s\n' "$recommendation"
+        ;;
+    --message)
+        printf '%s\n' "$message"
+        ;;
+    --notify)
+        if command -v notify-send >/dev/null 2>&1 && [[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then
+            notify-send "Livio OS graphics" "$message" || true
+        elif command -v kdialog >/dev/null 2>&1 && [[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then
+            kdialog --title "Livio OS graphics" --passivepopup "$message" 8 || true
+        else
+            printf '%s\n' "$message"
+        fi
+        ;;
+    *)
+        printf 'recommended=%s\n%s\n' "$recommendation" "$message"
+        ;;
+esac

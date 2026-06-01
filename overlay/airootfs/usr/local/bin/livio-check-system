@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+failures=0
+
+check() {
+    local message="$1"
+    shift
+
+    if "$@"; then
+        printf 'ok: %s\n' "$message"
+    else
+        printf 'fail: %s\n' "$message" >&2
+        failures=$((failures + 1))
+    fi
+}
+
+check "Livio release identity" grep -q '^ID=livio$' /usr/lib/os-release
+check "livio-release package installed" pacman -Q livio-release
+check "NetworkManager enabled" systemctl is-enabled --quiet NetworkManager.service
+check "bootloader tools installed" command -v grub-install
+check "Flatpak installed" command -v flatpak
+
+if (( failures > 0 )); then
+    exit 1
+fi
