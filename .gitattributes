@@ -10,4 +10,5 @@ PKGBUILD text eol=lf
 *.svg text eol=lf
 *.jsonc text eol=lf
 *.md text eol=lf
+*.txt text eol=lf
 *.ps1 text eol=lf
