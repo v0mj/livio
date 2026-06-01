@@ -10,6 +10,46 @@
 - selectable GPU driver strategy during install
 - a gaming-first package set for the installed system
 
+## Repository tree
+
+```text
+livio/
+├── BUILDING.md
+├── LICENSE
+├── README.md
+├── config/
+│   └── live-packages.x86_64
+├── overlay/
+│   ├── pacman.conf
+│   └── airootfs/
+│       ├── etc/
+│       │   ├── calamares/
+│       │   │   ├── branding/livio/
+│       │   │   ├── images/
+│       │   │   ├── modules/
+│       │   │   └── settings.conf
+│       │   ├── pacman.conf
+│       │   ├── skel/
+│       │   │   ├── .config/fastfetch/
+│       │   │   └── Desktop/
+│       │   ├── sudoers.d/
+│       │   ├── systemd/
+│       │   └── xdg/
+│       ├── root/
+│       │   └── customize_airootfs.sh
+│       └── usr/local/bin/
+├── packaging/
+│   ├── calamares/
+│   ├── linux-livio/
+│   └── livio-release/
+└── scripts/
+    ├── build-iso-docker.ps1
+    ├── build-iso.sh
+    └── validate-source.ps1
+```
+
+Generated folders such as `build/` and `outputs/` are intentionally not tracked.
+
 ## Current shape
 
 This repository is a starting point, not a finished distro release.
