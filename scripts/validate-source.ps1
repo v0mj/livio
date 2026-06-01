@@ -48,6 +48,7 @@ $requiredFiles = @(
   "overlay\airootfs\etc\calamares\modules\packagechooser_kernel.conf",
   "overlay\airootfs\etc\calamares\modules\packagechooser_desktop.conf",
   "overlay\airootfs\etc\calamares\modules\packagechooser_gpu.conf",
+  "overlay\airootfs\etc\skel\.config\fastfetch\livio-logo.txt",
   "overlay\airootfs\etc\skel\.config\fastfetch\config.jsonc"
 )
 
@@ -103,10 +104,14 @@ if ($errors.Count -eq 0) {
   Assert-True ($netinstall -match "linux-livio") "Netinstall must expose the linux-livio package group."
 
   try {
-    Read-Text "overlay\airootfs\etc\skel\.config\fastfetch\config.jsonc" | ConvertFrom-Json | Out-Null
+    $fastfetchConfig = Read-Text "overlay\airootfs\etc\skel\.config\fastfetch\config.jsonc" | ConvertFrom-Json
+    Assert-True ($fastfetchConfig.logo.type -eq "file") "Fastfetch must use the Livio logo file."
+    Assert-True ($fastfetchConfig.logo.source -eq "~/.config/fastfetch/livio-logo.txt") "Fastfetch logo source must point at livio-logo.txt."
   } catch {
     Add-Error "Fastfetch JSON config is invalid: $($_.Exception.Message)"
   }
+  $fastfetchLogo = Read-Text "overlay\airootfs\etc\skel\.config\fastfetch\livio-logo.txt"
+  Assert-True ($fastfetchLogo -match "@@%%%%%%@@") "Fastfetch Livio logo content is missing."
 
   Get-ChildItem -LiteralPath (Join-Path $root "overlay") -Recurse -Filter *.svg | ForEach-Object {
     try {
