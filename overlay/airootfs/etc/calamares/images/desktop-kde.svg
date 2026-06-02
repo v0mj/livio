@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
-  <rect width="640" height="360" rx="24" fill="#0f1720"/>
-  <rect x="24" y="24" width="592" height="312" rx="18" fill="#182430"/>
-  <rect x="48" y="56" width="180" height="24" rx="12" fill="#9ED36A"/>
-  <rect x="48" y="104" width="254" height="148" rx="18" fill="#243442"/>
-  <rect x="324" y="104" width="244" height="64" rx="18" fill="#243442"/>
-  <rect x="324" y="188" width="244" height="64" rx="18" fill="#243442"/>
-  <text x="48" y="304" fill="#F5F7FA" font-size="28" font-family="DejaVu Sans, sans-serif" font-weight="700">KDE Plasma</text>
-</svg>

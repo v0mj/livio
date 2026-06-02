@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
-  <rect width="640" height="360" rx="24" fill="#15181d"/>
-  <rect x="28" y="28" width="584" height="304" rx="20" fill="#232730"/>
-  <rect x="54" y="54" width="532" height="38" rx="14" fill="#9ED36A"/>
-  <rect x="54" y="116" width="160" height="164" rx="18" fill="#2e3440"/>
-  <rect x="236" y="116" width="160" height="164" rx="18" fill="#2e3440"/>
-  <rect x="418" y="116" width="168" height="164" rx="18" fill="#2e3440"/>
-  <text x="54" y="308" fill="#F5F7FA" font-size="28" font-family="DejaVu Sans, sans-serif" font-weight="700">GNOME</text>
-</svg>

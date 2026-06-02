@@ -41,7 +41,6 @@ livio/
 │       ├── etc/
 │       │   ├── calamares/
 │       │   │   ├── branding/livio/
-│       │   │   ├── images/
 │       │   │   ├── modules/
 │       │   │   └── settings.conf
 │       │   ├── pacman.conf
